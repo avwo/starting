@@ -1,8 +1,32 @@
 var program = require('../lib');
 var path = require('path');
+var name = 'test';
 
 program.setConfig({
-	main: path.join(__dirname, 'test.js')
+	main: path.join(__dirname, 'test.js'),
+	log: path.resolve('../../error.log'),
+	running: path.resolve('../../.test-running'),
+	name: name,
+	runCallback: function() {
+		console.log('[i] Press [Ctrl+C] to stop ' + name + '...');
+	},
+	startCallback: function(alreadyInRunning) {
+		console.log('[!] ' + name + ( alreadyInRunning ? ' is running.' : ' started.'));
+	},
+	restartCallback: function() {
+		console.log('[!] ' + name + ' started.');
+	},
+	stopCallback: function(err) {
+		if (err === true) {
+			console.log('[i] ' + name + ' killed.');
+		} else if (err) {
+				err.code === 'EPERM' ? console.log('[!] Cannot kill ' + name + ' owned by root.\n' +
+					'    Try to run command with `sudo`.')
+				: console.log('[!] %s', err.message);
+		} else {
+			console.log('[!] No running ' + name + '.');
+		}
+	}
 });
 
 program
