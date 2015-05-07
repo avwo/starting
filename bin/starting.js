@@ -1,6 +1,7 @@
 var program = require('commander');
 var cli = require('../lib/cli');
 var config = require('../package.json');
+var name = config.name;
 
 program
 	.version(config.version)
@@ -31,17 +32,7 @@ program
 	.description('Stop current background service')
 	.action(function (path) {
 		bingo = true;
-		cli.stop(program.running, function() {
-			console.log('[!] ' + name + ' started.');
-		});
-	});
-
-program
-	.command('restart <path>')
-	.description('Restart current background service')
-	.action(function (path) {
-		bingo = true;
-		cli.restart(getConfig(), function(err) {
+		cli.stop(program.running, function(err) {
 			if (err === true) {
 				console.log('[i] ' + name + ' killed.');
 			} else if (err) {
@@ -51,6 +42,16 @@ program
 			} else {
 				console.log('[!] No running ' + name + '.');
 			}
+		});
+	});
+
+program
+	.command('restart <path>')
+	.description('Restart current background service')
+	.action(function (path) {
+		bingo = true;
+		cli.restart(getConfig(), function(err) {
+			console.log('[!] ' + name + ' started.');
 		});
 	});
 
@@ -71,7 +72,7 @@ program
 function getConfig() {
 	return {
 		main: program.main,
-		name: config.name,
+		name: name,
 		version: config.version,
 		log: program.log,
 		running: program.running
