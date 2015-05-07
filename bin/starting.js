@@ -1,79 +1,47 @@
-var program = require('../lib');
-var command = new program.Command();
-var path = require('path');
+var program = require('commander');
+var cli = require('../lib/cli');
 var config = require('../package.json');
 
-command
+program
 	.version(config.version)
 	.usage('<command> [options]');
 
-command
+program
 	.command('run <path>')
 	.description('Start a front service')
 	.action(function (path) {
 		bingo = true;
-		exec(path, 'run');
+		cli.run(program.running, function() {
+			console.log('[i] Press [Ctrl+C] to stop ' + name + '...');
+		});
 	});
 
-command
+program
 	.command('start <path>')
 	.description('Start a background service')
 	.action(function (path) {
 		bingo = true;
-		exec(path, 'start');
+		cli.start(getConfig(), function(alreadyInRunning) {
+			console.log('[!] ' + name + ( alreadyInRunning ? ' is running.' : ' started.'));
+		});
 	});
 
-command
+program
 	.command('stop <path>')
 	.description('Stop current background service')
 	.action(function (path) {
 		bingo = true;
-		exec(path, 'stop');
+		cli.stop(program.running, function() {
+			console.log('[!] ' + name + ' started.');
+		});
 	});
 
-command
+program
 	.command('restart <path>')
 	.description('Restart current background service')
 	.action(function (path) {
 		bingo = true;
-		exec(path, 'restart');
-	});
-
-command
-	.command('help')
-	.description('Display help information')
-	.action(function () {
-		bingo = true;
-		command.help();
-	});
-
-command
-	.option('-m, --main [path]', 'main file path', String, undefined)
-	.option('-n, --modname [name]', 'name', String, undefined)
-	.option('-v, --version [version]', 'version', String, undefined)
-	.option('-l, --log [pth]', 'log', String, undefined)
-	.option('-r, --running [path]', 'running config file', String, undefined)
-	.parse(process.argv);
-
-function exec(path, cmdName) {
-	var name = command.modname || config.name;
-
-	program.setConfig({
-		main: path,
-		name: name,
-		version: command.version,
-		log: command.log,
-		running: command.running,
-		runCallback: function() {
-			console.log('[i] Press [Ctrl+C] to stop ' + name + '...');
-		},
-		startCallback: function(alreadyInRunning) {
-			console.log('[!] ' + name + ( alreadyInRunning ? ' is running.' : ' started.'));
-		},
-		restartCallback: function() {
-			console.log('[!] ' + name + ' started.');
-		},
-		stopCallback: function(err) {
+		cli.restart(getConfig(), function(err) {
 			if (err === true) {
 				console.log('[i] ' + name + ' killed.');
 			} else if (err) {
@@ -83,9 +51,30 @@ function exec(path, cmdName) {
 			} else {
 				console.log('[!] No running ' + name + '.');
 			}
-		}
+		});
 	});
 
-	program
-		.parse(['node', name, cmdName]);
+program
+	.command('help')
+	.description('Display help information')
+	.action(function () {
+		bingo = true;
+		program.help();
+	});
+
+program
+	.option('-m, --main [path]', 'main file path', String, undefined)
+	.option('-l, --log [pth]', 'log', String, undefined)
+	.option('-r, --running [path]', 'running config file', String, undefined)
+	.parse(process.argv);
+
+function getConfig() {
+	return {
+		main: program.main,
+		name: config.name,
+		version: config.version,
+		log: program.log,
+		running: program.running
+	}
 }
+
