@@ -12,7 +12,7 @@ program
 	.description('Start a front service')
 	.action(function (path) {
 		bingo = true;
-		cli.run(program.running, function() {
+		cli.run(path, function() {
 			console.log('[i] Press [Ctrl+C] to stop ' + name + '...');
 		});
 	});
@@ -22,15 +22,15 @@ program
 	.description('Start a background service')
 	.action(function (path) {
 		bingo = true;
-		cli.start(getConfig(), function(alreadyInRunning) {
+		cli.start(getConfig(path), function(alreadyInRunning) {
 			console.log('[!] ' + name + ( alreadyInRunning ? ' is running.' : ' started.'));
 		});
 	});
 
 program
-	.command('stop <path>')
+	.command('stop')
 	.description('Stop current background service')
-	.action(function (path) {
+	.action(function () {
 		bingo = true;
 		cli.stop(program.running, function(err) {
 			if (err === true) {
@@ -50,7 +50,7 @@ program
 	.description('Restart current background service')
 	.action(function (path) {
 		bingo = true;
-		cli.restart(getConfig(), function(err) {
+		cli.restart(getConfig(path), function(err) {
 			console.log('[!] ' + name + ' started.');
 		});
 	});
@@ -69,9 +69,9 @@ program
 	.option('-r, --running [path]', 'running config file', String, undefined)
 	.parse(process.argv);
 
-function getConfig() {
+function getConfig(main) {
 	return {
-		main: program.main,
+		main: main,
 		name: name,
 		version: config.version,
 		log: program.log,
