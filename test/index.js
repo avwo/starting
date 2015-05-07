@@ -7,6 +7,7 @@ program.setConfig({
 	log: path.resolve('../../error.log'),
 	running: path.resolve('../../.test-running'),
 	name: name,
+	version: '0.1.0',
 	runCallback: function() {
 		console.log('[i] Press [Ctrl+C] to stop ' + name + '...');
 	},
