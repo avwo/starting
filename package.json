@@ -5,16 +5,16 @@
   "author": "avenwu <avenwu@vip.qq.com>",
   "contributors": [],
   "license": "MIT",
-  "homepage": "https://github.com/avwo/whistle",
+  "homepage": "https://github.com/avwo/starting",
   "keywords": ["cmd", "start", "bootstrap"],
   "bin": {
-    "whistle": "./bin/starting.js"
+    "starting": "./bin/starting.js"
   },
   "repository": {
 	  "type": "git",
 	  "url": "https://github.com/avwo/starting.git"
   },
-  "dependencies": 
+  "dependencies": {
 	   "commander": "2.7.1"
   },
   "scripts": {
