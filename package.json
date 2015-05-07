@@ -1,0 +1,26 @@
+{
+  "name": "starting",
+  "description": "command line script",
+  "version": "0.0.2",
+  "author": "avenwu <avenwu@vip.qq.com>",
+  "contributors": [],
+  "license": "MIT",
+  "homepage": "https://github.com/avwo/whistle",
+  "keywords": ["cmd", "start", "bootstrap"],
+  "bin": {
+    "whistle": "./bin/starting.js"
+  },
+  "repository": {
+	  "type": "git",
+	  "url": "https://github.com/avwo/starting.git"
+  },
+  "dependencies": 
+	   "commander": "2.7.1"
+  },
+  "scripts": {
+		"test": "node test"
+},
+  "engines": {
+    "node": ">= 0.10.0"
+  }
+}
