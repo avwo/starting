@@ -7,7 +7,7 @@ command line script
 #Usage
 
   	starting help
-  	starting start `main path`
+
 #API Reference
 1. 配置项目启动参数: `program.setConfig(config)`
 
