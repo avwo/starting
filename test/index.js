@@ -5,7 +5,10 @@ var name = 'test';
 program.setConfig({
 	main: path.join(__dirname, 'test.js'),
 	log: path.resolve('../../error.log'),
-	running: path.resolve('../../.test-running'),
+	running: function(options) {
+		return options.running && path.resolve(options.running) 
+		|| path.resolve('../../.test-running');
+	},
 	name: name,
 	version: '0.1.0',
 	runCallback: function() {
@@ -31,6 +34,7 @@ program.setConfig({
 });
 
 program
+	.option('-r, --running [path]', 'running file', String, undefined)
 	.option('-n, --username [username]', 'login username', String, undefined)
 	.option('-w, --password [password]', 'login password', String, undefined)
 	.option('-p, --port [port]', 'port', parseInt, undefined)
