@@ -1,5 +1,5 @@
 # starting
-command line script
+starting可以作为启动命令行后台进程的工具，也可以作为第三方应用集成到其它项目中，用来编写命令行启动脚本
 #Installation
 	$ npm install starting
 #Example
@@ -7,6 +7,10 @@ command line script
 #Usage
 
   	starting help
+	starting run 'path'
+	starting start 'path'
+	starting restart 'path'
+	starting stop
 
 #API Reference
 1. 配置项目启动参数: `program.setConfig(config)`
