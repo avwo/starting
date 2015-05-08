@@ -1,4 +1,5 @@
 var program = require('commander');
+var path = require('path');
 var cli = require('../lib/cli');
 var config = require('../package.json');
 var name = config.name;
@@ -10,9 +11,9 @@ program
 program
 	.command('run <path>')
 	.description('Start a front service')
-	.action(function (path) {
+	.action(function (main) {
 		bingo = true;
-		cli.run(path, function() {
+		cli.run(path.resolve(main), function() {
 			console.log('[i] Press [Ctrl+C] to stop ' + name + '...');
 		});
 	});
@@ -20,9 +21,9 @@ program
 program
 	.command('start <path>')
 	.description('Start a background service')
-	.action(function (path) {
+	.action(function (main) {
 		bingo = true;
-		cli.start(getConfig(path), function(alreadyInRunning) {
+		cli.start(getConfig(path.resolve(main)), function(alreadyInRunning) {
 			console.log('[!] ' + name + ( alreadyInRunning ? ' is running.' : ' started.'));
 		});
 	});
@@ -48,9 +49,9 @@ program
 program
 	.command('restart <path>')
 	.description('Restart current background service')
-	.action(function (path) {
+	.action(function (main) {
 		bingo = true;
-		cli.restart(getConfig(path), function(err) {
+		cli.restart(getConfig(path.resolve(main)), function(err) {
 			console.log('[!] ' + name + ' started.');
 		});
 	});
