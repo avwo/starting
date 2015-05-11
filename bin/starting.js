@@ -15,7 +15,7 @@ program
 	.description('Start a front service')
 	.action(function (main) {
 		bingo = true;
-		cli.run(path.resolve(main), function() {
+		cli.run(path.resolve(main), getConfig(), function() {
 			console.log('[i] Press [Ctrl+C] to stop ' + name + '...');
 		});
 	});
@@ -25,7 +25,7 @@ program
 	.description('Start a background service')
 	.action(function (main) {
 		bingo = true;
-		cli.start(getConfig(path.resolve(main)), function(alreadyInRunning) {
+		cli.start(getConfig(path.resolve(main)), getConfig(), function(alreadyInRunning) {
 			console.log('[!] ' + name + ( alreadyInRunning ? ' is running.' : ' started.'));
 		});
 	});
@@ -68,18 +68,20 @@ program
 
 program
 	.option('-m, --main [path]', 'main file path', String, undefined)
+	.option('-c, --custom <custom>', 'custom parameters ("node --harmony")', String, undefined)
 	.option('-l, --log [pth]', 'log', String, undefined)
 	.option('-r, --running [path]', 'running config file', String, undefined)
 	.parse(process.argv);
 
 function getConfig(main) {
-	return {
+	
+	return main ? {
 		main: main,
 		name: name,
 		version: config.version,
 		log: program.log,
 		running: program.running
-	}
+	} : {custom: program.custom};
 }
 
 

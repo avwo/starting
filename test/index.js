@@ -39,5 +39,5 @@ program
 	.option('-w, --password [password]', 'login password', String, undefined)
 	.option('-p, --port [port]', 'port', parseInt, undefined)
 	.option('-b, --bootstrap [script path]', 'automatic startup script path', String, undefined)
-	.option('-c, --config [config file path]', 'startup config file path', String, undefined)
+	.option('-f, --config [config file path]', 'startup config file path', String, undefined)
 	.parse(process.argv);
