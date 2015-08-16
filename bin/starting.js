@@ -68,7 +68,7 @@ program
 
 program
 	.option('-m, --main [path]', 'main file path', String, undefined)
-	.option('-c, --custom <custom>', 'custom parameters ("node --harmony")', String, undefined)
+	.option('-c, --command <command>', 'command parameters ("node --harmony")', String, undefined)
 	.option('-l, --log [pth]', 'log', String, undefined)
 	.option('-r, --running [path]', 'running config file', String, undefined)
 	.parse(process.argv);
@@ -81,7 +81,7 @@ function getConfig(main) {
 		version: config.version,
 		log: program.log,
 		running: program.running
-	} : {custom: program.custom};
+	} : {command: program.command};
 }
 
 
