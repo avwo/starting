@@ -25,17 +25,17 @@ program
 	.description('Start a background service')
 	.action(function (main) {
 		bingo = true;
-		cli.start(getConfig(path.resolve(main)), getConfig(), function(alreadyInRunning) {
+		cli.start(path.resolve(main), getConfig(), function(alreadyInRunning) {
 			console.log('[!] ' + name + ( alreadyInRunning ? ' is running.' : ' started.'));
 		});
 	});
 
 program
-	.command('stop')
+	.command('stop <path>')
 	.description('Stop current background service')
 	.action(function () {
 		bingo = true;
-		cli.stop(program.running, function(err) {
+		cli.stop(path.resolve(main), function(err) {
 			if (err === true) {
 				console.log('[i] ' + name + ' killed.');
 			} else if (err) {
@@ -53,7 +53,7 @@ program
 	.description('Restart current background service')
 	.action(function (main) {
 		bingo = true;
-		cli.restart(getConfig(path.resolve(main)), function(err) {
+		cli.restart(path.resolve(main), function(err) {
 			console.log('[!] ' + name + ' started.');
 		});
 	});
@@ -67,7 +67,6 @@ program
 	});
 
 program
-	.option('-m, --main [path]', 'main file path', String, undefined)
 	.option('-c, --command <command>', 'command parameters ("node --harmony")', String, undefined)
 	.option('-l, --log [pth]', 'log', String, undefined)
 	.option('-r, --running [path]', 'running config file', String, undefined)
