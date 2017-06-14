@@ -1,14 +1,11 @@
 {
   "name": "starting",
   "description": "command line script for whistle",
-  "version": "2.1.3",
+  "version": "2.2.0",
   "author": "avenwu <avenwu@vip.qq.com>",
   "contributors": [],
   "license": "MIT",
   "homepage": "https://github.com/avwo/starting",
-  "bin": {
-    "starting": "./bin/starting.js"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/avwo/starting.git"
