@@ -1,7 +1,7 @@
 {
   "name": "starting",
   "description": "command line script for whistle",
-  "version": "8.0.1",
+  "version": "8.0.2",
   "author": "avenwu <avenwu@vip.qq.com>",
   "contributors": [],
   "license": "MIT",
